@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8949425169502264513}
   - component: {fileID: 816855812303054190}
-  - component: {fileID: 8632753329986299531}
+  - component: {fileID: 1032362026461864325}
   m_Layer: 0
   m_Name: DebugMenu
   m_TagString: Untagged
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924deb9586c46ee4484c4264fa143fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uImGuiInstance: {fileID: 8632753329986299531}
   menuToggle:
     m_Name: Menu Toggle
     m_Type: 0
@@ -63,7 +62,7 @@ MonoBehaviour:
       m_Action: Menu Toggle
       m_Flags: 0
     m_Flags: 0
---- !u!114 &8632753329986299531
+--- !u!114 &1032362026461864325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,16 +71,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8042572543639473130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3823c58ff231244a92c4f9877f7911e, type: 3}
+  m_Script: {fileID: 11500000, guid: 61a8de9fbb8292447895f792a52c928a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
-  _renderFeature: {fileID: 8154476835314884958, guid: f288ae1f4751b564a96ac7587541f7a2, type: 2}
-  _rendererType: 0
+  fontCustomInitializer:
+    m_PersistentCalls:
+      m_Calls: []
+  fontAtlasConfiguration: {fileID: 0}
   _platformType: 0
-  _iniSettings: {fileID: 0}
   _initialConfiguration:
-    ImGuiConfig: 65
+    ImGuiConfig: 129
     DoubleClickTime: 0.3
     DoubleClickMaxDist: 6
     DragThreshold: 6
@@ -98,11 +97,6 @@ MonoBehaviour:
     ConfigDockingNoSplit: 0
     ConfigDockingAlwaysTabBar: 0
     ConfigDockingTransparentPayload: 0
-  _fontCustomInitializer:
-    m_PersistentCalls:
-      m_Calls: []
-  _fontAtlasConfiguration: {fileID: 0}
-  _shaders: {fileID: 11400000, guid: 68f2e550e81076948ba9757c73f74336, type: 2}
-  _style: {fileID: 11400000, guid: 90718c4e7d6fa04438adef1ad7a432cc, type: 2}
+  _iniSettings: {fileID: 0}
+  _style: {fileID: 0}
   _cursorShapes: {fileID: 0}
-  _doGlobalEvents: 1
