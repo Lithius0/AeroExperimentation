@@ -17,8 +17,8 @@ MonoBehaviour:
   ZeroLiftAoADegrees: 0
   StallAnglePositiveDegrees: 0
   StallAngleNegativeDegrees: 0
-  Chord: 0.84
+  Chord: 6.22
   FlapFraction: 0
-  Span: 1.64
+  Span: 0.85
   AspectRatio: 2
   TransitionWidthDegrees: 5

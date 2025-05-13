@@ -15,10 +15,10 @@ MonoBehaviour:
   LiftSlope: 6.28
   SkinFriction: 0.01
   ZeroLiftAoADegrees: 0
-  StallAnglePositiveDegrees: 0
-  StallAngleNegativeDegrees: 0
+  StallAnglePositiveDegrees: 25
+  StallAngleNegativeDegrees: -25
   Chord: 0.84
-  FlapFraction: 0
+  FlapFraction: 0.4
   Span: 1.64
   AspectRatio: 2
   TransitionWidthDegrees: 5
