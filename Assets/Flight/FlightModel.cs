@@ -3,22 +3,75 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class FlightModel : MonoBehaviour
 {
+    /// <summary>
+    /// Cached forces values. Updated whenever the forces are calculated internally.
+    /// </summary>
+    public AeroForces Forces { get; private set; } = new();
+
     private Rigidbody rigidBody;
-    private AeroSurface[] airSurfaces;
+    private AeroSurface[] surfaces;
+
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
-        airSurfaces = GetComponentsInChildren<AeroSurface>();
+        surfaces = GetComponentsInChildren<AeroSurface>();
+    }
+
+    private void Start()
+    {
+        rigidBody.AddForce(transform.forward * 1000, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
     {
-        foreach (var airSurface in airSurfaces)
+        CalculateAerodynamicForces();
+        foreach (var surfaces in surfaces)
         {
-            Vector3 position = airSurface.Position;
-            Vector3 force = airSurface.GetForce(rigidBody.GetPointVelocity(position));
-            rigidBody.AddForceAtPosition(force, position);
+            Vector3 position = surfaces.Position;
+            rigidBody.AddForceAtPosition(surfaces.Forces.Lift + surfaces.Forces.Drag, position);
         }
+        rigidBody.AddForce(transform.forward * 20000);
     }
+
+    private AeroForces CalculateAerodynamicForces()
+    {
+        AeroForces forces = new();
+        foreach (var surfaces in surfaces)
+        {
+            Vector3 position = surfaces.Position;
+            forces += surfaces.CalculateForces(rigidBody.GetPointVelocity(position), position - rigidBody.worldCenterOfMass);
+        }
+        Forces = forces;
+        return forces;
+    }
+
+#if UNITY_EDITOR
+    // For gizmos drawing.
+    public void CalculateCenterOfLift(out Vector3 center, out Vector3 force, Vector3 displayAirVelocity, float displayAirDensity)
+    {
+        Vector3 com;
+        AeroForces forceAndTorque;
+        if (surfaces == null)
+        {
+            center = Vector3.zero;
+            force = Vector3.zero;
+            return;
+        }
+
+        if (rigidBody == null)
+        {
+            com = GetComponent<Rigidbody>().worldCenterOfMass;
+            forceAndTorque = CalculateAerodynamicForces();
+        }
+        else
+        {
+            com = rigidBody.worldCenterOfMass;
+            forceAndTorque = Forces;
+        }
+
+        force = forceAndTorque.Lift + forceAndTorque.Drag;
+        center = com + Vector3.Cross(force, forceAndTorque.Torque) / forceAndTorque.Torque.sqrMagnitude;
+    }
+#endif
 }

@@ -4,8 +4,7 @@ public struct FlightCoefficients
 {
     public float Lift;
     public float Drag;
-    public float LiftNormal;
-    public float LiftTangent;
+    public float Moment;
 }
 
 public static class AeroCoefficients
@@ -29,10 +28,16 @@ public static class AeroCoefficients
         return Mathf.Lerp(0.8f, 0.4f, (Mathf.Abs(flapAngle * Mathf.Rad2Deg) - 10) / 50);
     }
 
-    public static float LiftCoefficientMaxFraction(float flapFraction)
+    private static float LiftCoefficientMaxFraction(float flapFraction)
     {
         return Mathf.Clamp01(1 - 0.5f * (flapFraction - 0.1f) / 0.3f);
     }
+
+    private static float TorqCoefficientProportion(float effectiveAngle)
+    {
+        return 0.25f - 0.175f * (1 - 2 * Mathf.Abs(effectiveAngle) / Mathf.PI);
+    }
+
 
     public static FlightCoefficients CalculateCoefficients(AeroSurfaceConfig config, float aoa, float flapAngle)
     {
@@ -71,12 +76,13 @@ public static class AeroCoefficients
         float tangentLiftCoefficient = config.SkinFriction * Mathf.Cos(effectiveAngleOfAttack);
         float normalLiftCoefficient = (liftCoefficient + tangentLiftCoefficient * sinAngleOfAttack) / cosAngleOfAttack;
         float dragCoefficient = normalLiftCoefficient * sinAngleOfAttack + tangentLiftCoefficient * cosAngleOfAttack;
+        float torqueCoefficient = -normalLiftCoefficient * TorqCoefficientProportion(effectiveAngleOfAttack);
+
         return new FlightCoefficients()
         {
             Lift = liftCoefficient,
             Drag = dragCoefficient,
-            LiftNormal = normalLiftCoefficient,
-            LiftTangent = tangentLiftCoefficient,
+            Moment = torqueCoefficient,
         };
     }
 
@@ -108,13 +114,13 @@ public static class AeroCoefficients
         float tangentLiftCoefficient = 0.5f * config.SkinFriction * cosAngleOfAttack;
         float liftCoefficient = normalLiftCoefficient * cosAngleOfAttack - tangentLiftCoefficient * sinAngleOfAttack;
         float dragCoefficient = normalLiftCoefficient * sinAngleOfAttack + tangentLiftCoefficient * cosAngleOfAttack;
+        float torqueCoefficient = -normalLiftCoefficient * TorqCoefficientProportion(effectiveAngleOfAttack);
 
         return new FlightCoefficients()
         {
             Lift = liftCoefficient,
             Drag = dragCoefficient,
-            LiftNormal = normalLiftCoefficient,
-            LiftTangent = tangentLiftCoefficient,
+            Moment = torqueCoefficient,
         };
     }
 }
