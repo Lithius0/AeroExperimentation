@@ -79,7 +79,7 @@ public static class AeroCoefficients
             var lowCoefficients = CalculateLowAngleCoefficients(config, aoa, flapAngle);
             var highCoefficients = CalculateHighAngleCoefficients(config, aoa, flapAngle, stallAnglePositive, stallAngleNegative);
             float lerpT = Mathf.InverseLerp(stallAngleNegative - transitionRadius, stallAngleNegative + transitionRadius, aoa);
-            return FlightCoefficients.Lerp(highCoefficients, lowCoefficients, lerpT);
+            return FlightCoefficients.Lerp(highCoefficients, highCoefficients, lerpT);
         }
         else if (aoa <= stallAnglePositive && aoa >= stallAngleNegative)
         {
@@ -145,8 +145,7 @@ public static class AeroCoefficients
         {
             Lift = liftCoefficient,
             Drag = dragCoefficient,
-            // Moment = torqueCoefficient,
-            Moment = 0,
+            Moment = torqueCoefficient,
         };
     }
 }

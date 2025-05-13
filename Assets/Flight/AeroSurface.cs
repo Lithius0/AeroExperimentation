@@ -34,7 +34,8 @@ public class AeroSurface : MonoBehaviour
         forces.Drag = area * coefficients.Drag * dynamicPressure * dragDirection;
         //forces.Torque = area * coefficients.Moment * Config.Chord * dynamicPressure * -transform.right;
 
-        forces.Torque = Vector3.Cross(relativePosition, forces.Lift + forces.Drag);
+        // forces.Torque = Vector3.Cross(relativePosition, forces.Lift + forces.Drag);
+        forces.Torque = Vector3.zero;
 
         Forces = forces;
 
