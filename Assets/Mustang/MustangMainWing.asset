@@ -21,3 +21,4 @@ MonoBehaviour:
   FlapFraction: 0.22
   Span: 2.3
   AspectRatio: 5.83
+  TransitionWidthDegrees: 5

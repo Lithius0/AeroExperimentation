@@ -12,11 +12,13 @@ public class AeroSurfaceConfig : ScriptableObject
     public float FlapFraction = 0.4f;
     public float Span = 2;
     public float AspectRatio = 2;
+    public float TransitionWidthDegrees = 5;
 
     public float CorrectedLiftSlope => LiftSlope * (AspectRatio / (AspectRatio + 2 * (AspectRatio + 4) / (AspectRatio + 2)));
     public float StallAnglePositive => Mathf.Deg2Rad * StallAnglePositiveDegrees;
     public float StallAngleNegative => Mathf.Deg2Rad * StallAngleNegativeDegrees;
     public float ZeroLiftAoA => Mathf.Deg2Rad * ZeroLiftAoADegrees;
+    public float TransitionWidth => Mathf.Deg2Rad * TransitionWidthDegrees;
 
     private void OnValidate()
     {

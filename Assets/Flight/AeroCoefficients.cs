@@ -1,3 +1,4 @@
+using Unity.Hierarchy;
 using UnityEngine;
 
 public struct FlightCoefficients
@@ -5,6 +6,15 @@ public struct FlightCoefficients
     public float Lift;
     public float Drag;
     public float Moment;
+
+    public static FlightCoefficients Lerp(FlightCoefficients a, FlightCoefficients b, float t)
+    {
+        FlightCoefficients coefficients;
+        coefficients.Lift = Mathf.Lerp(a.Lift, b.Lift, t);
+        coefficients.Drag = Mathf.Lerp(a.Drag, b.Drag, t);
+        coefficients.Moment = Mathf.Lerp(a.Moment, b.Moment, t);
+        return coefficients;
+    }
 }
 
 public static class AeroCoefficients
@@ -56,7 +66,22 @@ public static class AeroCoefficients
         float stallAnglePositive = zeroLiftAoA + clMaxHigh / correctedLiftSlope;
         float stallAngleNegative = zeroLiftAoA + clMaxLow / correctedLiftSlope;
 
-        if (aoa <= stallAnglePositive && aoa >= stallAngleNegative)
+        float transitionRadius = config.TransitionWidth / 2;
+        if (Mathf.Abs(aoa - stallAnglePositive) <= transitionRadius)
+        {
+            var lowCoefficients = CalculateLowAngleCoefficients(config, aoa, flapAngle);
+            var highCoefficients = CalculateHighAngleCoefficients(config, aoa, flapAngle, stallAnglePositive, stallAngleNegative);
+            float lerpT = Mathf.InverseLerp(stallAnglePositive - transitionRadius, stallAnglePositive + transitionRadius, aoa);
+            return FlightCoefficients.Lerp(lowCoefficients, highCoefficients, lerpT);
+        }
+        else if (Mathf.Abs(aoa - stallAngleNegative) <= transitionRadius)
+        {
+            var lowCoefficients = CalculateLowAngleCoefficients(config, aoa, flapAngle);
+            var highCoefficients = CalculateHighAngleCoefficients(config, aoa, flapAngle, stallAnglePositive, stallAngleNegative);
+            float lerpT = Mathf.InverseLerp(stallAngleNegative - transitionRadius, stallAngleNegative + transitionRadius, aoa);
+            return FlightCoefficients.Lerp(highCoefficients, lowCoefficients, lerpT);
+        }
+        else if (aoa <= stallAnglePositive && aoa >= stallAngleNegative)
         {
             return CalculateLowAngleCoefficients(config, aoa, flapAngle);
         }
