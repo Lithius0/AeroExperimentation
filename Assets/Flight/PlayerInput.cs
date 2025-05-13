@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
     public InputAction YawAction;
     public InputAction RollAction;
 
+    private Vector3 previousControlVector = Vector3.zero;
+
     private void OnEnable()
     {
         PitchAction.Enable();
@@ -36,7 +38,10 @@ public class PlayerInput : MonoBehaviour
         controlVector.x = PitchAction.ReadValue<float>();
         controlVector.y = YawAction.ReadValue<float>();
         controlVector.z = RollAction.ReadValue<float>();
-        FlightModel.ApplyControl(controlVector);
+
+        previousControlVector = Vector3.MoveTowards(previousControlVector, controlVector, Time.deltaTime * 10);
+
+        FlightModel.ApplyControl(previousControlVector);
 
     }
 }

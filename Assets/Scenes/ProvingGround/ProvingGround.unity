@@ -496,6 +496,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 870941367111562349, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
+      propertyPath: m_Name
+      value: RElevator
+      objectReference: {fileID: 0}
     - target: {fileID: 1286229265904131591, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
       propertyPath: ControlAxis.x
       value: 0
@@ -572,6 +576,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5235146395002498587, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
+      propertyPath: m_Name
+      value: Rudder
+      objectReference: {fileID: 0}
     - target: {fileID: 5679334759425073966, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
       propertyPath: m_Name
       value: Mustang
@@ -587,6 +595,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5015563521690122644, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1364983421}
     - targetCorrespondingSourceObject: {fileID: 5015563521690122644, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1751987165}
@@ -630,6 +641,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuName: 
   Target: {fileID: 509774930}
+--- !u!1 &1364983420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1364983421}
+  - component: {fileID: 1364983422}
+  m_Layer: 0
+  m_Name: Fuselage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1364983421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364983420}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
+  m_LocalPosition: {x: 0, y: -0.04, z: 0.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 717781077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1364983422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364983420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3437d58e25e4ff45829a1524ccded22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Config: {fileID: 11400000, guid: e3aa9325255032744ae490829fceb310, type: 2}
+  FlapDeployRatio: 0
+  MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1001 &1678642460
 PrefabInstance:
   m_ObjectHideFlags: 0

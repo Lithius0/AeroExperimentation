@@ -20,6 +20,7 @@ public class AeroSurface : MonoBehaviour
         // Ignoring spanwise-flow.
         velocity = Vector3.ProjectOnPlane(velocity, transform.right);
         float aoa = GetAoa(velocity);
+        IsStalling = aoa > Config.StallAnglePositive || aoa < Config.StallAngleNegative;
         FlightCoefficients coefficients = AeroCoefficients.CalculateCoefficients(Config, aoa, FlapAngle);
         float area = Config.Chord * Config.Span;
 

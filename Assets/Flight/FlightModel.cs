@@ -20,7 +20,7 @@ public class FlightModel : MonoBehaviour
 
     private void Start()
     {
-        rigidBody.AddForce(transform.forward * 200000, ForceMode.Impulse);
+        rigidBody.AddForce(transform.forward * 10000, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
@@ -31,7 +31,7 @@ public class FlightModel : MonoBehaviour
             Vector3 position = surfaces.Position;
             rigidBody.AddForceAtPosition(surfaces.Forces.Lift + surfaces.Forces.Drag, position);
         }
-        rigidBody.AddForce(transform.forward * 20000);
+        rigidBody.AddForce(transform.forward * 5000);
     }
 
     private AeroForces CalculateAerodynamicForces()
