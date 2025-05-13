@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     public float RollLimit = 45f;
     public float SideslipCorrectionRollGain = 30f;
     public float RollTowardsGain = 30f;
+    public float RollRecoveryGain = 30f;
 
     private void OnEnable()
     {
@@ -84,12 +85,10 @@ public class PlayerInput : MonoBehaviour
         float rollTowards = Vector3.SignedAngle(Vector3.left, cross, Vector3.forward);
 
         // Normalize the roll towards value to [-1, 1]
-        // The clamp here is because Signed angle actually produces a value [-180, 180], which too extreme.
-        rollTowards = Mathf.Clamp(rollTowards, -90, 90);
-        rollTowards /= 90f;
+        rollTowards /= 180f;
 
-        // Multiplying x / (x + 1) should reduce rollTowards at slower speeds while maintaining the full range for higher speeds.
-        rollTowards *= cross.magnitude / (cross.magnitude + 1);
+        // Reduces the roll when the nose is pointed in roughly the correct direction 
+        rollTowards *= cross.magnitude;
         float sideslipCorrection = SideslipCorrectionRollTarget();
 
         return Mathf.Clamp(sideslipCorrection * SideslipCorrectionRollGain + rollTowards * RollTowardsGain, -RollLimit, RollLimit);
@@ -119,7 +118,7 @@ public class PlayerInput : MonoBehaviour
         Vector3 cross = Vector3.Cross(Vector3.forward, localTargetVector);
 
         float rollTarget = CalculateRollTarget();
-        float roll = -WrapAngle(FlightModel.transform.eulerAngles.z) + rollTarget;
+        float roll = -WrapAngle(FlightModel.transform.eulerAngles.z) / 180 * RollRecoveryGain + rollTarget;
 
         Vector3 controlVector = new Vector3(cross.x, cross.y, roll / 360f) + input;
         controlVector.Scale(ControlGain);

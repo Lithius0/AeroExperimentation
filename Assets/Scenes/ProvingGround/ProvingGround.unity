@@ -244,7 +244,7 @@ MonoBehaviour:
   FlightModel: {fileID: 717781078}
   ShipCamera: {fileID: 1751987164}
   Aimpoint: {fileID: 2133198690}
-  ControlGain: {x: 3, y: 1, z: 5}
+  ControlGain: {x: 3, y: 1, z: 30}
   PitchAction:
     m_Name: Pitch
     m_Type: 0
@@ -361,9 +361,10 @@ MonoBehaviour:
       m_Action: Mouse Move
       m_Flags: 0
     m_Flags: 0
-  RollLimit: 180
-  SideslipCorrectionRollGain: 10
+  RollLimit: 360
+  SideslipCorrectionRollGain: 0
   RollTowardsGain: 90
+  RollRecoveryGain: 5
 --- !u!4 &450517854
 Transform:
   m_ObjectHideFlags: 0

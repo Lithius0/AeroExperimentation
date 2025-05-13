@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AircraftPhysicsDisplaySettings
   m_EditorClassIdentifier: 
   scaleForcesByWeight: 1
-  lengthScale: 34
+  lengthScale: 1
   widthScale: 1
   showCenterOfMass: 1
   comColor: {r: 1, g: 0.445, b: 0, a: 1}
