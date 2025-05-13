@@ -7,6 +7,7 @@ public class FlightModel : MonoBehaviour
     /// Cached forces values. Updated whenever the forces are calculated internally.
     /// </summary>
     public AeroForces Forces { get; private set; } = new();
+    public Vector3 Velocity => rigidBody.linearVelocity;
 
     private Rigidbody rigidBody;
     private AeroSurface[] surfaces;
@@ -78,8 +79,9 @@ public class FlightModel : MonoBehaviour
             forceAndTorque = Forces;
         }
 
-        force = forceAndTorque.Lift + forceAndTorque.Drag;
-        center = com + Vector3.Cross(force, forceAndTorque.Torque) / forceAndTorque.Torque.sqrMagnitude;
+        Vector3 linearForce = forceAndTorque.Lift + forceAndTorque.Drag;
+        force = linearForce;
+        center = com + Vector3.Cross(linearForce, forceAndTorque.Torque) / linearForce.sqrMagnitude;
     }
 #endif
 }

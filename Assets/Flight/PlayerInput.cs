@@ -4,18 +4,29 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     public FlightModel FlightModel;
+    public Camera ShipCamera;
+    public RectTransform Aimpoint;
+
+    public Vector3 ControlGain = Vector3.one;
 
     public InputAction PitchAction;
     public InputAction YawAction;
     public InputAction RollAction;
+    public InputAction MouseMove;
 
     private Vector3 previousControlVector = Vector3.zero;
+    private Vector3 targetVector = Vector3.forward;
+
+    public float RollLimit = 45f;
+    public float SideslipCorrectionRollGain = 30f;
+    public float RollTowardsGain = 30f;
 
     private void OnEnable()
     {
         PitchAction.Enable();
         YawAction.Enable();
         RollAction.Enable();
+        MouseMove.Enable();
     }
 
     private void OnDisable()
@@ -23,21 +34,96 @@ public class PlayerInput : MonoBehaviour
         PitchAction.Disable();
         YawAction.Disable();
         RollAction.Disable();
+        MouseMove.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
+    }
+
+    private float WrapAngle(float angle)
+    {
+        angle %= 360;
+        angle = angle > 180 ? angle - 360 : angle;
+        return angle;
+    }
+
+    private Vector3 Flatten(Vector3 vector)
+    {
+        return new Vector3(vector.x, 0, vector.z);
+    }
+
+    /// <summary>
+    /// Calculates a normalized roll response to the sideslip. [-1, 1].
+    /// </summary>
+    private float SideslipCorrectionRollTarget()
+    {
+        Vector3 projectedTargetVector = Flatten(targetVector);
+        Vector3 projectedVelocity = Flatten(FlightModel.Velocity);
+        // Target vector rotated 90 to the right. Used to measure how much of the velocity is perpendicular to the target vector.
+        Vector3 targetRight = new(projectedTargetVector.z, 0, -projectedTargetVector.x);
+        if (projectedVelocity.sqrMagnitude > 0.1f && targetRight.sqrMagnitude > 0.1f)
+        {
+            return Mathf.Asin(Vector3.Dot(projectedVelocity.normalized, targetRight.normalized)) / Mathf.PI * 2f;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private float CalculateRollTarget()
+    {
+        Quaternion inverse = Quaternion.Inverse(FlightModel.transform.rotation);
+        Vector3 localTargetVector = inverse * targetVector;
+        Vector3 cross = Vector3.Cross(Vector3.forward, localTargetVector);
+        float rollTowards = Vector3.SignedAngle(Vector3.left, cross, Vector3.forward);
+
+        // Normalize the roll towards value to [-1, 1]
+        // The clamp here is because Signed angle actually produces a value [-180, 180], which too extreme.
+        rollTowards = Mathf.Clamp(rollTowards, -90, 90);
+        rollTowards /= 90f;
+
+        // Multiplying x / (x + 1) should reduce rollTowards at slower speeds while maintaining the full range for higher speeds.
+        rollTowards *= cross.magnitude / (cross.magnitude + 1);
+        float sideslipCorrection = SideslipCorrectionRollTarget();
+
+        return Mathf.Clamp(sideslipCorrection * SideslipCorrectionRollGain + rollTowards * RollTowardsGain, -RollLimit, RollLimit);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 controlVector;
-        controlVector.x = PitchAction.ReadValue<float>();
-        controlVector.y = YawAction.ReadValue<float>();
-        controlVector.z = RollAction.ReadValue<float>();
+        Vector3 input;
+        input.x = PitchAction.ReadValue<float>();
+        input.y = YawAction.ReadValue<float>();
+        input.z = RollAction.ReadValue<float>();
+
+        Vector2 delta = MouseMove.ReadValue<Vector2>();
+
+        Vector3 targetScreenPosition = ShipCamera.WorldToScreenPoint(ShipCamera.transform.position + targetVector);
+        targetScreenPosition += new Vector3(delta.x, delta.y, 0);
+        targetScreenPosition.x = Mathf.Clamp(targetScreenPosition.x, 0, ShipCamera.pixelWidth);
+        targetScreenPosition.y = Mathf.Clamp(targetScreenPosition.y, 0, ShipCamera.pixelHeight);
+        targetScreenPosition.z = 1;
+        Aimpoint.position = targetScreenPosition;
+        targetVector = ShipCamera.ScreenPointToRay(targetScreenPosition).direction;
+        targetVector.Normalize();
+
+        Quaternion inverse = Quaternion.Inverse(FlightModel.transform.rotation);
+        Vector3 localTargetVector = inverse * targetVector;
+        Vector3 cross = Vector3.Cross(Vector3.forward, localTargetVector);
+
+        float rollTarget = CalculateRollTarget();
+        float roll = -WrapAngle(FlightModel.transform.eulerAngles.z) + rollTarget;
+
+        Vector3 controlVector = new Vector3(cross.x, cross.y, roll / 360f) + input;
+        controlVector.Scale(ControlGain);
+        controlVector.x = Mathf.Clamp(controlVector.x, -1, 1);
+        controlVector.y = Mathf.Clamp(controlVector.y, -1, 1);
+        controlVector.z = Mathf.Clamp(controlVector.z, -1, 1);
 
         previousControlVector = Vector3.MoveTowards(previousControlVector, controlVector, Time.deltaTime * 10);
 
