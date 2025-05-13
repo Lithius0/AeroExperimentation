@@ -145,7 +145,8 @@ public static class AeroCoefficients
         {
             Lift = liftCoefficient,
             Drag = dragCoefficient,
-            Moment = torqueCoefficient,
+            // Moment = torqueCoefficient,
+            Moment = 0,
         };
     }
 }
