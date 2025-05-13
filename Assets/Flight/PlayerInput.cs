@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour
         YawAction.Enable();
         RollAction.Enable();
         MouseMove.Enable();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnDisable()
@@ -35,6 +36,7 @@ public class PlayerInput : MonoBehaviour
         YawAction.Disable();
         RollAction.Disable();
         MouseMove.Disable();
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
