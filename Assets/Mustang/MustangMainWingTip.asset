@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LiftSlope: 6.28
   SkinFriction: 0.02
-  ZeroLiftAoADegrees: 0
-  StallAnglePositiveDegrees: 10
-  StallAngleNegativeDegrees: -10
-  Chord: 1.97
+  ZeroLiftAoADegrees: -1.25
+  StallAnglePositiveDegrees: 25
+  StallAngleNegativeDegrees: -25
+  Chord: 1.43
   FlapFraction: 0.22
   Span: 2.3
   AspectRatio: 5.83

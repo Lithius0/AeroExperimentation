@@ -20,7 +20,7 @@ public class FlightModel : MonoBehaviour
 
     private void Start()
     {
-        rigidBody.AddForce(transform.forward * 1000, ForceMode.Impulse);
+        rigidBody.AddForce(transform.forward * 200000, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
@@ -44,6 +44,14 @@ public class FlightModel : MonoBehaviour
         }
         Forces = forces;
         return forces;
+    }
+
+    public void ApplyControl(Vector3 controlVector)
+    {
+        foreach (var surface in surfaces)
+        {
+            surface.ApplyControl(controlVector);
+        }
     }
 
 #if UNITY_EDITOR

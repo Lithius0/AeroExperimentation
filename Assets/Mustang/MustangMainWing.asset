@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbba1c646f5988469ff20cab3e73bfa, type: 3}
   m_Name: MustangMainWing
   m_EditorClassIdentifier: 
-  LiftSlope: 6.28
-  SkinFriction: 0.02
-  ZeroLiftAoADegrees: 0
-  StallAnglePositiveDegrees: 10
-  StallAngleNegativeDegrees: -10
+  LiftSlope: 10
+  SkinFriction: 0.01
+  ZeroLiftAoADegrees: -1.25
+  StallAnglePositiveDegrees: 20
+  StallAngleNegativeDegrees: -20
   Chord: 1.97
   FlapFraction: 0.22
   Span: 2.3

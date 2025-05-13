@@ -9,6 +9,7 @@ public class AeroSurface : MonoBehaviour
     public float MaxFlapAngle => Mathf.Deg2Rad * MaxFlapAngleDegrees;
     public float FlapAngle => FlapDeployRatio * MaxFlapAngle;
 
+    public Vector3 ControlAxis = Vector3.zero;
     public bool IsStalling { get; private set; } = false;
     public AeroForces Forces { get; private set; } = new();
 
@@ -37,6 +38,11 @@ public class AeroSurface : MonoBehaviour
         Forces = forces;
 
         return forces;
+    }
+
+    public void ApplyControl(Vector3 controlVector)
+    {
+        FlapDeployRatio = Mathf.Clamp(Vector3.Dot(controlVector, ControlAxis), -1, 1);
     }
 
     private float GetAoa(Vector3 velocity)
