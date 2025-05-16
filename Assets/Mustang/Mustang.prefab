@@ -47,6 +47,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: e3aa9325255032744ae490829fceb310, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &1156971842649422711
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: e3aa9325255032744ae490829fceb310, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &2958867085507798561
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +143,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: 559202cda7c5c7c4ebe9b7d00edb16d5, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &4236963171143010602
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +191,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: 622d8af579acffe4caee6221326153ab, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &4308866353052587863
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4308866353052587863}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.037595775, w: 0.999293}
   m_LocalPosition: {x: 1.547, y: -0.349, z: 1.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -235,6 +239,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: 622d8af579acffe4caee6221326153ab, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &5235146395002498587
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +287,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: e3aa9325255032744ae490829fceb310, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &6243142637304136922
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +335,7 @@ MonoBehaviour:
   Config: {fileID: 11400000, guid: 559202cda7c5c7c4ebe9b7d00edb16d5, type: 2}
   FlapDeployRatio: 0
   MaxFlapAngleDegrees: 30
+  ControlAxis: {x: 0, y: 0, z: 0}
 --- !u!1001 &4760415918880874111
 PrefabInstance:
   m_ObjectHideFlags: 0
