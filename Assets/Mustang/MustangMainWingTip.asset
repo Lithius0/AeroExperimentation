@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbba1c646f5988469ff20cab3e73bfa, type: 3}
   m_Name: MustangMainWingTip
   m_EditorClassIdentifier: 
-  LiftSlope: 8
+  LiftSlope: 6.85
   SkinFriction: 0.01
   ZeroLiftAoADegrees: -1.25
-  StallAnglePositiveDegrees: 25
-  StallAngleNegativeDegrees: -25
+  StallAnglePositiveDegrees: 15
+  StallAngleNegativeDegrees: -15
   Chord: 1.43
   FlapFraction: 0.22
   Span: 2.3
   AspectRatio: 5.83
-  TransitionWidthDegrees: 5
+  TransitionWidthDegrees: 8
+  NormalLiftMultiplier: 1
+  StallLiftMultiplier: 1
+  NormalDragMultiplier: 0.32
+  StallDragMultiplier: 1.6
+  LiftInducedDragMultiplier: 0.51

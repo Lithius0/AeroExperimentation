@@ -99,7 +99,7 @@ public static class AeroCoefficients
             var lowCoefficients = CalculateLowAngleCoefficients(config, aoa, intermediates);
             var highCoefficients = CalculateHighAngleCoefficients(config, aoa, intermediates);
             float lerpT = Mathf.InverseLerp(stallAngleNegative - transitionRadius, stallAngleNegative + transitionRadius, aoa);
-            return FlightCoefficients.Lerp(highCoefficients, highCoefficients, lerpT);
+            return FlightCoefficients.Lerp(highCoefficients, lowCoefficients, lerpT);
         }
         else if (aoa <= stallAnglePositive && aoa >= stallAngleNegative)
         {
@@ -120,13 +120,13 @@ public static class AeroCoefficients
         float cosAngleOfAttack = Mathf.Cos(effectiveAngleOfAttack);
         float tangentLiftCoefficient = config.SkinFriction * Mathf.Cos(effectiveAngleOfAttack);
         float normalLiftCoefficient = (liftCoefficient + tangentLiftCoefficient * sinAngleOfAttack) / cosAngleOfAttack;
-        float dragCoefficient = normalLiftCoefficient * sinAngleOfAttack + tangentLiftCoefficient * cosAngleOfAttack;
+        float dragCoefficient = normalLiftCoefficient * sinAngleOfAttack * config.LiftInducedDragMultiplier + tangentLiftCoefficient * cosAngleOfAttack;
         float torqueCoefficient = -normalLiftCoefficient * TorqCoefficientProportion(effectiveAngleOfAttack);
 
         return new FlightCoefficients()
         {
-            Lift = liftCoefficient,
-            Drag = dragCoefficient,
+            Lift = liftCoefficient * config.NormalLiftMultiplier,
+            Drag = dragCoefficient * config.NormalDragMultiplier,
             Moment = torqueCoefficient,
         };
     }
@@ -166,8 +166,8 @@ public static class AeroCoefficients
 
         return new FlightCoefficients()
         {
-            Lift = liftCoefficient,
-            Drag = dragCoefficient,
+            Lift = liftCoefficient * config.StallLiftMultiplier,
+            Drag = dragCoefficient * config.StallDragMultiplier,
             Moment = torqueCoefficient,
         };
     }

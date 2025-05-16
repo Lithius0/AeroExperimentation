@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MustangMainWing
   m_EditorClassIdentifier: 
   LiftSlope: 10
-  SkinFriction: 0.01
+  SkinFriction: 0.02
   ZeroLiftAoADegrees: -1.25
   StallAnglePositiveDegrees: 20
   StallAngleNegativeDegrees: -20
@@ -21,4 +21,9 @@ MonoBehaviour:
   FlapFraction: 0.22
   Span: 2.3
   AspectRatio: 5.83
-  TransitionWidthDegrees: 5
+  TransitionWidthDegrees: 15
+  NormalLiftMultiplier: 1
+  StallLiftMultiplier: 1
+  NormalDragMultiplier: 0.4
+  StallDragMultiplier: 1.87
+  LiftInducedDragMultiplier: 0.2

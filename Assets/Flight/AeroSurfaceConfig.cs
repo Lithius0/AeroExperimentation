@@ -20,6 +20,12 @@ public class AeroSurfaceConfig : ScriptableObject
     public float ZeroLiftAoABase => Mathf.Deg2Rad * ZeroLiftAoADegrees;
     public float TransitionWidth => Mathf.Deg2Rad * TransitionWidthDegrees;
 
+    public float NormalLiftMultiplier = 1;
+    public float StallLiftMultiplier = 1;
+    public float NormalDragMultiplier = 1;
+    public float StallDragMultiplier = 1;
+    public float LiftInducedDragMultiplier = 1;
+
     private void OnValidate()
     {
         if (FlapFraction > 0.4f)

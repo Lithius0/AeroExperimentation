@@ -24,6 +24,7 @@ public class AeroSurfaceDebug : DebugModule
             float[] drag = new float[count];
             float[] dragNormal = new float[count];
             float[] dragStall = new float[count];
+            float[] liftDragRatio = new float[count];
 
             for (int i = 0; i < count; i++)
             {
@@ -39,6 +40,7 @@ public class AeroSurfaceDebug : DebugModule
                 drag[i] = coefficients.Drag;
                 dragNormal[i] = normalCoefficients.Drag;
                 dragStall[i] = stallCoefficients.Drag;
+                liftDragRatio[i] = coefficients.Lift / coefficients.Drag;
             }
 
             ImPlot.SetupAxisLimits(ImAxis.Y1, -2, 2, ImPlotCond.Once);
@@ -57,6 +59,13 @@ public class AeroSurfaceDebug : DebugModule
             ImPlot.PlotLine("CD_Stall", ref xData[0], ref dragStall[0], count, 0, 0);
 
             ImPlot.EndPlot();
+
+            // CL/CD plots are on a different order of magnitude than the other coefficients.
+            ImPlot.BeginPlot("Lift to Drag Ratio");
+            ImPlot.SetNextLineStyle(new Vector4(0.8f, 0.5f, 0.8f, 1f));
+            ImPlot.PlotLine("CL/CD", ref xData[0], ref liftDragRatio[0], count, 0, 0);
+            ImPlot.EndPlot();
+
         }
         ImGui.End();
     }

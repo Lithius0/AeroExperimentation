@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbba1c646f5988469ff20cab3e73bfa, type: 3}
   m_Name: Air Surface Config
   m_EditorClassIdentifier: 
-  LiftSlope: 6.2831855
+  LiftSlope: 4.26
   SkinFriction: 0.02
-  ZeroLiftAoADegrees: 0
-  StallAnglePositiveDegrees: 10
-  StallAngleNegativeDegrees: -10
+  ZeroLiftAoADegrees: -0.6
+  StallAnglePositiveDegrees: 20
+  StallAngleNegativeDegrees: -20
   Chord: 1
   FlapFraction: 0.4
   Span: 2
   AspectRatio: 4
+  TransitionWidthDegrees: 5
+  NormalLiftMultiplier: 1
+  StallLiftMultiplier: 1
+  NormalDragMultiplier: 0.55
+  StallDragMultiplier: 1
+  LiftInducedDragMultiplier: 1
