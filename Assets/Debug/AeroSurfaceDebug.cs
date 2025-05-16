@@ -18,20 +18,43 @@ public class AeroSurfaceDebug : DebugModule
             ImPlot.BeginPlot("Coefficients");
             const int count = 1000;
             float[] xData = new float[count];
-            float[] liftCoefficients = new float[count];
+            float[] lift = new float[count];
+            float[] liftNormal = new float[count];
+            float[] liftStall = new float[count];
             float[] drag = new float[count];
+            float[] dragNormal = new float[count];
+            float[] dragStall = new float[count];
 
             for (int i = 0; i < count; i++)
             {
                 float x = (float)i / count * 2 * Mathf.PI - Mathf.PI;
                 xData[i] = Mathf.Rad2Deg * x;
-                FlightCoefficients coefficients = AeroCoefficients.CalculateCoefficients(Target.Config, x, flapAngle);
-                liftCoefficients[i] = float.IsFinite(coefficients.Lift) ? coefficients.Lift : 0;
-                drag[i] = float.IsFinite(coefficients.Drag) ? coefficients.Drag : 0;
+                AeroIntermediates intermediates = AeroCoefficients.CalculateIntermediates(Target.Config, Target.FlapAngle);
+                FlightCoefficients coefficients = AeroCoefficients.CalculateCoefficients(Target.Config, x, Target.FlapAngle);
+                FlightCoefficients normalCoefficients = AeroCoefficients.CalculateLowAngleCoefficients(Target.Config, x, intermediates);
+                FlightCoefficients stallCoefficients = AeroCoefficients.CalculateHighAngleCoefficients(Target.Config, x, intermediates);
+                lift[i] = coefficients.Lift;
+                liftNormal[i] = normalCoefficients.Lift;
+                liftStall[i] = stallCoefficients.Lift;
+                drag[i] = coefficients.Drag;
+                dragNormal[i] = normalCoefficients.Drag;
+                dragStall[i] = stallCoefficients.Drag;
             }
 
-            ImPlot.PlotLine("CL", ref xData[0], ref liftCoefficients[0], count, 0, 0);
+            ImPlot.SetupAxisLimits(ImAxis.Y1, -2, 2, ImPlotCond.Once);
+
+            ImPlot.SetNextLineStyle(new Vector4(0.3f, 0.5f, 0.7f, 1f));
+            ImPlot.PlotLine("CL", ref xData[0], ref lift[0], count, 0, 0);
+            ImPlot.SetNextLineStyle(new Vector4(0.3f, 0.5f, 0.7f, 0.3f));
+            ImPlot.PlotLine("CL_Normal", ref xData[0], ref liftNormal[0], count, 0, 0);
+            ImPlot.SetNextLineStyle(new Vector4(0.3f, 0.5f, 0.7f, 0.3f));
+            ImPlot.PlotLine("CL_Stall", ref xData[0], ref liftStall[0], count, 0, 0);
+            ImPlot.SetNextLineStyle(new Vector4(0.8f, 0.5f, 0.3f, 1f));
             ImPlot.PlotLine("CD", ref xData[0], ref drag[0], count, 0, 0);
+            ImPlot.SetNextLineStyle(new Vector4(0.8f, 0.5f, 0.3f, 0.3f));
+            ImPlot.PlotLine("CD_Normal", ref xData[0], ref dragNormal[0], count, 0, 0);
+            ImPlot.SetNextLineStyle(new Vector4(0.8f, 0.5f, 0.3f, 0.3f));
+            ImPlot.PlotLine("CD_Stall", ref xData[0], ref dragStall[0], count, 0, 0);
 
             ImPlot.EndPlot();
         }
