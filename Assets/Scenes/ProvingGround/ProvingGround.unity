@@ -361,6 +361,23 @@ MonoBehaviour:
       m_Action: Mouse Move
       m_Flags: 0
     m_Flags: 0
+  LockMouse:
+    m_Name: Lock Mouse
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d6fde69d-44f8-4496-8732-f6552a49d493
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c144afb3-4a54-4e4a-9e0a-921dbabe0036
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Lock Mouse
+      m_Flags: 0
+    m_Flags: 0
   RollLimit: 360
   SideslipCorrectionRollGain: 0
   RollTowardsGain: 90
@@ -588,6 +605,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4867511721192766784, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
+      propertyPath: m_Mass
+      value: 4000
+      objectReference: {fileID: 0}
     - target: {fileID: 5015563521690122644, guid: 532674bf76f0595429eaf97ee38cbd57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 292.92184

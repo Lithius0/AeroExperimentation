@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     public InputAction YawAction;
     public InputAction RollAction;
     public InputAction MouseMove;
+    public InputAction LockMouse;
 
     private Vector3 previousControlVector = Vector3.zero;
     private Vector3 targetVector = Vector3.forward;
@@ -28,7 +29,20 @@ public class PlayerInput : MonoBehaviour
         YawAction.Enable();
         RollAction.Enable();
         MouseMove.Enable();
-        Cursor.lockState = CursorLockMode.Locked;
+        LockMouse.Enable();
+        LockMouse.performed += ToggleMouseLock;
+    }
+
+    private void ToggleMouseLock(InputAction.CallbackContext obj)
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        { 
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     private void OnDisable()
@@ -37,7 +51,7 @@ public class PlayerInput : MonoBehaviour
         YawAction.Disable();
         RollAction.Disable();
         MouseMove.Disable();
-        Cursor.lockState = CursorLockMode.None;
+        LockMouse.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -102,16 +116,15 @@ public class PlayerInput : MonoBehaviour
         input.y = YawAction.ReadValue<float>();
         input.z = RollAction.ReadValue<float>();
 
-        Vector2 delta = MouseMove.ReadValue<Vector2>();
 
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Vector2 delta = MouseMove.ReadValue<Vector2>();
+            targetVector = Quaternion.AngleAxis(delta.x * 0.1f, ShipCamera.transform.up) * targetVector;
+            targetVector = Quaternion.AngleAxis(delta.y * 0.1f, -ShipCamera.transform.right) * targetVector;
+        }
         Vector3 targetScreenPosition = ShipCamera.WorldToScreenPoint(ShipCamera.transform.position + targetVector);
-        targetScreenPosition += new Vector3(delta.x, delta.y, 0);
-        targetScreenPosition.x = Mathf.Clamp(targetScreenPosition.x, 0, ShipCamera.pixelWidth);
-        targetScreenPosition.y = Mathf.Clamp(targetScreenPosition.y, 0, ShipCamera.pixelHeight);
-        targetScreenPosition.z = 1;
         Aimpoint.position = targetScreenPosition;
-        targetVector = ShipCamera.ScreenPointToRay(targetScreenPosition).direction;
-        targetVector.Normalize();
 
         Quaternion inverse = Quaternion.Inverse(FlightModel.transform.rotation);
         Vector3 localTargetVector = inverse * targetVector;
@@ -129,6 +142,5 @@ public class PlayerInput : MonoBehaviour
         previousControlVector = Vector3.MoveTowards(previousControlVector, controlVector, Time.deltaTime * 10);
 
         FlightModel.ApplyControl(previousControlVector);
-
     }
 }

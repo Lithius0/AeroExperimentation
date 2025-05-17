@@ -21,7 +21,7 @@ public class FlightModel : MonoBehaviour
 
     private void Start()
     {
-        rigidBody.AddForce(transform.forward * 10000, ForceMode.Impulse);
+        rigidBody.AddForce(transform.forward * rigidBody.mass * 100, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
