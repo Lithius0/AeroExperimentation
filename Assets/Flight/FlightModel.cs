@@ -32,7 +32,7 @@ public class FlightModel : MonoBehaviour
             Vector3 position = surfaces.Position;
             rigidBody.AddForceAtPosition(surfaces.Forces.Lift + surfaces.Forces.Drag, position);
         }
-        rigidBody.AddForce(transform.forward * 5000);
+        rigidBody.AddForce(transform.forward * 14000);
     }
 
     private AeroForces CalculateAerodynamicForces()

@@ -31,6 +31,7 @@ public class PlayerInput : MonoBehaviour
         MouseMove.Enable();
         LockMouse.Enable();
         LockMouse.performed += ToggleMouseLock;
+        targetVector = ShipCamera.transform.forward;
     }
 
     private void ToggleMouseLock(InputAction.CallbackContext obj)

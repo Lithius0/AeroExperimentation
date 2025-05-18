@@ -17,8 +17,13 @@ MonoBehaviour:
   ZeroLiftAoADegrees: 0
   StallAnglePositiveDegrees: 0
   StallAngleNegativeDegrees: 0
-  Chord: 6.22
+  Chord: 5.29
   FlapFraction: 0
-  Span: 0.85
+  Span: 1.24
   AspectRatio: 2
   TransitionWidthDegrees: 5
+  NormalLiftMultiplier: 1
+  StallLiftMultiplier: 1
+  NormalDragMultiplier: 1
+  StallDragMultiplier: 1
+  LiftInducedDragMultiplier: 1
