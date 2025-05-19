@@ -123,6 +123,7 @@ public class PlayerInput : MonoBehaviour
             Vector2 delta = MouseMove.ReadValue<Vector2>();
             targetVector = Quaternion.AngleAxis(delta.x * 0.1f, ShipCamera.transform.up) * targetVector;
             targetVector = Quaternion.AngleAxis(delta.y * 0.1f, -ShipCamera.transform.right) * targetVector;
+            targetVector.Normalize();
         }
         Vector3 targetScreenPosition = ShipCamera.WorldToScreenPoint(ShipCamera.transform.position + targetVector);
         Aimpoint.position = targetScreenPosition;
