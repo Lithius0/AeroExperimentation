@@ -9,6 +9,10 @@ public class FlightModel : MonoBehaviour
     public AeroForces Forces { get; private set; } = new();
     public Vector3 Velocity => rigidBody.linearVelocity;
 
+    // It would be better to place this in an external object keeping track of atmospheric conditions.
+    // But as it is right now there's no point to do so.
+    public Vector3 Wind = Vector3.zero;
+
     private Rigidbody rigidBody;
     private AeroSurface[] surfaces;
 
@@ -41,7 +45,7 @@ public class FlightModel : MonoBehaviour
         foreach (var surfaces in surfaces)
         {
             Vector3 position = surfaces.Position;
-            forces += surfaces.CalculateForces(rigidBody.GetPointVelocity(position), position - rigidBody.worldCenterOfMass);
+            forces += surfaces.CalculateForces(rigidBody.GetPointVelocity(position) - Wind, position - rigidBody.worldCenterOfMass);
         }
         Forces = forces;
         return forces;
