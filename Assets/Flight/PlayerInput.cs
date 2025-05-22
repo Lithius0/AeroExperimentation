@@ -135,7 +135,7 @@ public class PlayerInput : MonoBehaviour
         float rollTarget = CalculateRollTarget();
         float roll = -WrapAngle(FlightModel.transform.eulerAngles.z) / 180 * RollRecoveryGain + rollTarget;
 
-        Vector3 controlVector = new Vector3(cross.x, cross.y, roll / 360f) + input;
+        Vector3 controlVector = new Vector3(cross.x, cross.y, roll) + input;
         controlVector.Scale(ControlGain);
         controlVector.x = Mathf.Clamp(controlVector.x, -1, 1);
         controlVector.y = Mathf.Clamp(controlVector.y, -1, 1);
