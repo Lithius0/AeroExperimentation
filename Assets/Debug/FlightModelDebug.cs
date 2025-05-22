@@ -14,7 +14,8 @@ public class FlightModelDebug : DebugModule
         {
             var rigidbody = Target.GetComponent<Rigidbody>();
             var forces = Target.Forces;
-            ImGui.Text($"Speed: {rigidbody.linearVelocity.magnitude} m/s");
+            ImGui.Text($"Ground Speed: {rigidbody.linearVelocity.magnitude} m/s");
+            ImGui.Text($"Air Speed: {(rigidbody.linearVelocity - Target.Wind).magnitude} m/s");
             ImGui.Text($"Lift: {forces.Lift.magnitude}");
             ImGui.Text($"Drag: {forces.Drag.magnitude}");
             ImGui.Text($"Lift/Drag: {forces.Lift.magnitude / forces.Drag.magnitude}");

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AeroSurfaceDebug : DebugModule
 {
-    public override string DefaultName => "Air Surface";
+    public override string DefaultName => "Aero Surface";
 
     public AeroSurface Target;
     private float flapAngle = 0;
 
     public override void Render()
     {
-        if (ImGui.Begin("Test", ref ModuleEnabled))
+        if (ImGui.Begin("Aero Surface", ref ModuleEnabled))
         {
             ImGui.SliderAngle("Flap Angle", ref flapAngle, -50, 50);
 

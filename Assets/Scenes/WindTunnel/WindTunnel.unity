@@ -5582,6 +5582,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8042572543639473130, guid: 9861cbc3a362ec340a8ee8dbb3aa5909, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1776993447}
+    - targetCorrespondingSourceObject: {fileID: 8042572543639473130, guid: 9861cbc3a362ec340a8ee8dbb3aa5909, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1776993448}
   m_SourcePrefab: {fileID: 100100000, guid: 9861cbc3a362ec340a8ee8dbb3aa5909, type: 3}
 --- !u!1 &1776993442 stripped
 GameObject:
@@ -5617,6 +5620,20 @@ MonoBehaviour:
   MenuName: 
   FlightModel: {fileID: 658170824}
   Windparticles: {fileID: 1173331469}
+--- !u!114 &1776993448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776993442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4c5e5e09f3c3c4f8b90c2048397f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MenuName: 
+  Target: {fileID: 658170824}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
