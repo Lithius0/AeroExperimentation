@@ -8,6 +8,7 @@ public class FlightModel : MonoBehaviour
     /// </summary>
     public AeroForces Forces { get; private set; } = new();
     public Vector3 Velocity => rigidBody.linearVelocity;
+    public float Throttle = 1f;
 
     // It would be better to place this in an external object keeping track of atmospheric conditions.
     // But as it is right now there's no point to do so.
@@ -36,7 +37,7 @@ public class FlightModel : MonoBehaviour
             Vector3 position = surfaces.Position;
             rigidBody.AddForceAtPosition(surfaces.Forces.Lift + surfaces.Forces.Drag, position);
         }
-        rigidBody.AddForce(transform.forward * 14000);
+        rigidBody.AddForce(14000 * Throttle * transform.forward);
     }
 
     private AeroForces CalculateAerodynamicForces()

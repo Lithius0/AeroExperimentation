@@ -9,6 +9,8 @@ public class FlightDisplay : MonoBehaviour
     private TMP_Text speedLabel;
     [SerializeField]
     private TMP_Text altitudeLabel;
+    [SerializeField]
+    private TMP_Text throttleLabel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,5 +23,6 @@ public class FlightDisplay : MonoBehaviour
     {
         speedLabel.text = $"SPD: {flightModel.Velocity.magnitude:0.0}";
         altitudeLabel.text = $"ALT: {flightModel.transform.position.y:0.0}";
+        throttleLabel.text = $"THR: {(int)(flightModel.Throttle * 100)}%";
     }
 }

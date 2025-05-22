@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     public InputAction RollAction;
     public InputAction MouseMove;
     public InputAction LockMouse;
+    public InputAction ThrottleAction;
 
     private Vector3 previousControlVector = Vector3.zero;
     private Vector3 targetVector = Vector3.forward;
@@ -31,6 +32,7 @@ public class PlayerInput : MonoBehaviour
         MouseMove.Enable();
         LockMouse.Enable();
         LockMouse.performed += ToggleMouseLock;
+        ThrottleAction.Enable();
         targetVector = ShipCamera.transform.forward;
     }
 
@@ -53,6 +55,7 @@ public class PlayerInput : MonoBehaviour
         RollAction.Disable();
         MouseMove.Disable();
         LockMouse.Disable();
+        ThrottleAction.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -112,6 +115,8 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        FlightModel.Throttle += ThrottleAction.ReadValue<float>() * Time.deltaTime;
+
         Vector3 input;
         input.x = PitchAction.ReadValue<float>();
         input.y = YawAction.ReadValue<float>();
